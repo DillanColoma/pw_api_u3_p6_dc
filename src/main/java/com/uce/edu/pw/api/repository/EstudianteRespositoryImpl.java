@@ -1,11 +1,14 @@
 package com.uce.edu.pw.api.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.uce.edu.pw.api.repository.modelo.Estudiante;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -38,30 +41,14 @@ public class EstudianteRespositoryImpl implements IEstudianteRepository{
 		// TODO Auto-generated method stub
 		this.entityManager.persist(estudiante);
 	}
+
+	@Override
+	public List<Estudiante> seleccionarPorGenero(String genero) {
+		// TODO Auto-generated method stub
+		TypedQuery<Estudiante>myqueQuery= this.entityManager.createQuery("select e from Estudiante where e.genero=:genero",Estudiante.class);
+		
+		return null;
+	}
 	
-	/*@Override
-	public Estudiante seleccionar(Integer id) {
-		// TODO Auto-generated method stub
-		return this.entityManager.find(Estudiante.class, id);
-	}
-
-	@Override
-	public void actualizar(Estudiante estudiante) {
-		this.entityManager.merge(estudiante);
-		
-	}
-
-	@Override
-	public void eliminar(Integer id) {
-		// TODO Auto-generated method stub
-		this.entityManager.remove(this.seleccionar(id));
-		
-	}
-
-	@Override
-	public void insertar(Estudiante estudiante) {
-		// TODO Auto-generated method stub
-		this.entityManager.persist(estudiante);
-	}*/
-
+	
 }
