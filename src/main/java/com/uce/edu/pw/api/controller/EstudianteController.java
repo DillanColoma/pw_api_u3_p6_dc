@@ -65,18 +65,29 @@ public class EstudianteController {
 		this.estudianteService.borrar(id);
 		
 	}
-	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1
-	@GetMapping(path = "/buscar/{id}/nuevo")
-	public Estudiante buscar(@PathVariable Integer id) {
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1/nuevo/prueba
+	@GetMapping(path = "/buscar/{id}/nuevo/{dato}")
+	public Estudiante buscar(@PathVariable Integer id, @PathVariable String dato) {
+		System.out.println("Dato "+dato);
 		return this.estudianteService.buscar(id);
 	}
 	
+	
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=F&edad=21
 	@GetMapping(path = "/buscarPorGenero")
 	//El elemento de fitrado viene en elargueneto con la anotacion @RequestParam
-	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
+	public List<Estudiante> buscarPorGenero(@RequestParam String genero,@RequestParam Integer edad){
+		System.out.println("Edad "+ edad);
 		List<Estudiante> lista = this.estudianteService.seleccionarPorGenero(genero);
 		return lista;
 		
+	}
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/buscarMixto/3?prueba=HolaMundo
+	@GetMapping(path = "/buscarMixto/{id}")
+	public Estudiante buscarMixto(@PathVariable Integer id, @RequestParam String prueba) {
+		System.out.println("Id " +id);
+		System.out.println("Prueba "+prueba);
+		return this.estudianteService.buscar(id);
 	}
 	
 

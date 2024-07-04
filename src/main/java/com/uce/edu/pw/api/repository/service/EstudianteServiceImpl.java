@@ -42,7 +42,8 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	@Override
 	public List<Estudiante> seleccionarPorGenero(String genero) {
 		// TODO Auto-generated method stub
-		return this.estudianteRepository.seleccionarPorGenero(genero);
+		List<Estudiante> lista=  this.estudianteRepository.seleccionarPorGenero(genero);
+		return lista;
 	}
 
 }
