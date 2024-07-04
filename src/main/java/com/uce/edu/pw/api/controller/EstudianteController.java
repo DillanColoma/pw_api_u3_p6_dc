@@ -28,21 +28,26 @@ public class EstudianteController {
 	
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
-	@PostMapping(path = "/guardar")
+	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/
+	@PostMapping
 	public void guardar(@RequestBody Estudiante est) {
 		this.estudianteService.registrar(est);
 				
 	}
 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
-	@PutMapping(path = "/actualizar")
-	public void actualizar(@RequestBody Estudiante est) {
+	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
+	@PutMapping(path = "/{id}")
+	public void actualizar(@RequestBody Estudiante est, @PathVariable Integer id) {
+		est.setId(id);
 		this.estudianteService.actualizar(est);
 		
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
-	@PatchMapping(path = "/actualizarParcial")
-	public void actualizarParcial(@RequestBody Estudiante est){
+	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
+	@PatchMapping(path = "/{id}")
+	public void actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
+		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
 		if(est.getNombre()!=null) {
 			est2.setNombre(est.getNombre());
@@ -58,7 +63,8 @@ public class EstudianteController {
 		this.estudianteService.actualizar(est2);
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2 puedo enviar cualquier tipo de dato
-	@DeleteMapping(path = "/borrar/{id}")
+	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
+	@DeleteMapping(path = "/{id}")
 	public void borrar(@PathVariable Integer id) { //el tipo de dato que voy a ocupar en este caso es un id por 
 	                                 //por eso es un Integer y le pongo la anotacion @PathVariable
 		
@@ -66,9 +72,9 @@ public class EstudianteController {
 		
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1/nuevo/prueba
-	@GetMapping(path = "/buscar/{id}/nuevo/{dato}")
-	public Estudiante buscar(@PathVariable Integer id, @PathVariable String dato) {
-		System.out.println("Dato "+dato);
+	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
+	@GetMapping(path = "/{id}")
+	public Estudiante buscar(@PathVariable Integer id) {
 		return this.estudianteService.buscar(id);
 	}
 	
