@@ -45,6 +45,7 @@ public class EstudianteController {
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
+	//En el postman ya no lleva el id
 	@PatchMapping(path = "/{id}")
 	public void actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
 		est.setId(id);
@@ -77,17 +78,25 @@ public class EstudianteController {
 	public Estudiante buscar(@PathVariable Integer id) {
 		return this.estudianteService.buscar(id);
 	}
-	
+
+	@GetMapping(path = "/genero")
+	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
+		
+		List<Estudiante> lista= this.estudianteService.seleccionarPorGenero(genero);
+		return lista;
+	}
 	
 	//http://localhost:8082/API/v1.0/Matricula/estudiantes/buscarPorGenero?genero=F&edad=21
 	@GetMapping(path = "/buscarPorGenero")
-	//El elemento de fitrado viene en elargueneto con la anotacion @RequestParam
+	//El elemento de fitrado viene en el arguemeto con la anotacion @RequestParam
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero,@RequestParam Integer edad){
 		System.out.println("Edad "+ edad);
 		List<Estudiante> lista = this.estudianteService.seleccionarPorGenero(genero);
 		return lista;
 		
 	}
+
+		
 	//http://localhost:8082/API/v1.0/Matricula/estudiantes/buscarMixto/3?prueba=HolaMundo
 	@GetMapping(path = "/buscarMixto/{id}")
 	public Estudiante buscarMixto(@PathVariable Integer id, @RequestParam String prueba) {
@@ -96,5 +105,5 @@ public class EstudianteController {
 		return this.estudianteService.buscar(id);
 	}
 	
-
+	//EL END POINT NO TIENE QUE SE AMBIGUO, EN DARSE ESTE CASO ME DA ERRORES AMBIGUOS MAPPING
 }
