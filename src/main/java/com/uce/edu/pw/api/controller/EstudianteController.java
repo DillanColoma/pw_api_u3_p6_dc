@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,32 +23,42 @@ import com.uce.edu.pw.api.repository.service.IEstudianteService;
 @RequestMapping(path = "/estudiantes")
 public class EstudianteController {
 	
-	//Se inyecta la capa Service
+	//Interaccion directa con el service
 	@Autowired
 	private IEstudianteService estudianteService;
 	
-	
+	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/
 	@PostMapping
-	public void guardar(@RequestBody Estudiante est) {
+	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
 		this.estudianteService.registrar(est);
+		
+		return ResponseEntity.status(201).body(est);
 				
 	}
 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	@PutMapping(path = "/{id}")
-	public void actualizar(@RequestBody Estudiante est, @PathVariable Integer id) {
+	/*public void actualizar(@RequestBody Estudiante est, @PathVariable Integer id) {
 		est.setId(id);
 		this.estudianteService.actualizar(est);
 		
+	}*/
+	public ResponseEntity<Estudiante> actualizar(@RequestBody Estudiante est, @PathVariable Integer id) {
+		est.setId(id);
+		this.estudianteService.actualizar(est);
+		return ResponseEntity.status(238).body(est);
+		
 	}
+	
+	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	//En el postman ya no lleva el id
 	@PatchMapping(path = "/{id}")
-	public void actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
+	/*public void actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
 		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
 		if(est.getNombre()!=null) {
@@ -62,14 +73,32 @@ public class EstudianteController {
 		}
 				
 		this.estudianteService.actualizar(est2);
+	}*/
+	public ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
+		est.setId(id);
+		Estudiante est2= this.estudianteService.buscar(est.getId());
+		if(est.getNombre()!=null) {
+			est2.setNombre(est.getNombre());
+		}
+		if(est.getApellido()!=null) {
+			est2.setApellido(est.getApellido());
+			
+		}
+		if(est.getFechaNacimiento()!=null){
+			est2.setFechaNacimiento(est.getFechaNacimiento());
+		}
+				
+		this.estudianteService.actualizar(est2);
+		return ResponseEntity.status(239).body(est2);
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2 puedo enviar cualquier tipo de dato
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	@DeleteMapping(path = "/{id}")
-	public void borrar(@PathVariable Integer id) { //el tipo de dato que voy a ocupar en este caso es un id por 
+	public ResponseEntity<String> borrar(@PathVariable Integer id) { //el tipo de dato que voy a ocupar en este caso es un id por 
 	                                 //por eso es un Integer y le pongo la anotacion @PathVariable
 		
 		this.estudianteService.borrar(id);
+		return ResponseEntity.status(240).body("Borrado");
 		
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1/nuevo/prueba
