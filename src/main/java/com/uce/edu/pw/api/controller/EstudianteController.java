@@ -29,7 +29,7 @@ public class EstudianteController {
 	
 	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
-	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/
+	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes
 	@PostMapping
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
 		this.estudianteService.registrar(est);
