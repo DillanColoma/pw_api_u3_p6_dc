@@ -33,19 +33,26 @@ public class EstudianteController {
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes
 	@PostMapping
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
+		HttpHeaders cabeceraPost= new HttpHeaders();
+		cabeceraPost.add("mensaje_201", "Corresponde a la inserción de un recurso");
+		cabeceraPost.add("valor", "Estudiante insertado con éxito");
 		this.estudianteService.registrar(est);
-		
-		return ResponseEntity.status(201).body(est);
-				
+		return new ResponseEntity<>(est ,cabeceraPost,201); 		
 	}
 
+	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	@PutMapping(path = "/{id}")
      public ResponseEntity<Estudiante> actualizar(@RequestBody Estudiante est, @PathVariable Integer id) {
 		est.setId(id);
 		this.estudianteService.actualizar(est);
-		return ResponseEntity.status(238).body(est);
+		//return ResponseEntity.status(238).body(est);
+		
+		HttpHeaders cabeceraPut= new HttpHeaders();
+		cabeceraPut.add("mensaje_238", "Corresponde a la actualización de un recurso");
+		cabeceraPut.add("valor", "Estudiante actualizado");
+		return new ResponseEntity<>(est,cabeceraPut,238);
 		
 	}
 	
@@ -69,7 +76,11 @@ public class EstudianteController {
 		}
 				
 		this.estudianteService.actualizar(est2);
-		return ResponseEntity.status(239).body(est2);
+		HttpHeaders cabeceraPatch= new HttpHeaders();
+		cabeceraPatch.add("mensaje_239", "Corresponde a la actualización parcial de un recurso");
+		cabeceraPatch.add("valor", "Estudiante actualizado parcialmente");
+		//return ResponseEntity.status(239).body(est2);
+		return new ResponseEntity<>(est2,cabeceraPatch,239);
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2 puedo enviar cualquier tipo de dato
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
@@ -77,23 +88,27 @@ public class EstudianteController {
 	public ResponseEntity<String> borrar(@PathVariable Integer id) { //el tipo de dato que voy a ocupar en este caso es un id por 
 	                                 //por eso es un Integer y le pongo la anotacion @PathVariable
 		
+		
 		this.estudianteService.borrar(id);
-		return ResponseEntity.status(240).body("Borrado");
+		HttpHeaders cabeceraDelete= new  HttpHeaders();
+		cabeceraDelete.add("mensaje_240", "Corresponde a la eliminación del recurso");
+		cabeceraDelete.add("valor", "Estudiante eliminado");
+		return new ResponseEntity<>("Eliminado correctamente",cabeceraDelete,240);
 		
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1/nuevo/prueba
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
-@GetMapping(path = "/{id}")
-	
-	public  ResponseEntity<Estudiante>  buscarPorId(@PathVariable Integer id) {
-		
+	@GetMapping(path = "/{id}")
+	public  ResponseEntity<Estudiante>  buscarPorId(@PathVariable Integer id) {	
 	//Estudiante es= this.estudianteService.buscar(id);
 	//return ResponseEntity.status(236).body(es);
 	HttpHeaders cabeceras = new HttpHeaders();
 	cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
 	cabeceras.add("valor", "Estudiante escontrado");
 	return new ResponseEntity<>(this.estudianteService.buscar(id),cabeceras,236 );
-	};
+	}
+	
+
 	@GetMapping(path = "/genero")
 	public List<Estudiante> buscarPorGenero(@RequestParam String genero){
 		
