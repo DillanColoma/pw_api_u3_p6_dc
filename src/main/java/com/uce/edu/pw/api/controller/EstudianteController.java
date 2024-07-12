@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus.Series;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,8 +34,9 @@ public class EstudianteController {
 	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes
-	@PostMapping
+	@PostMapping(produces = "application/json", consumes = "application/xml")
 	public ResponseEntity<Estudiante> guardar(@RequestBody Estudiante est) {
+		
 		HttpHeaders cabeceraPost= new HttpHeaders();
 		cabeceraPost.add("mensaje_201", "Corresponde a la inserción de un recurso");
 		cabeceraPost.add("valor", "Estudiante insertado con éxito");
@@ -42,8 +46,8 @@ public class EstudianteController {
 
 	
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizar
-	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
-	@PutMapping(path = "/{id}")
+	//Nivel 1 http://localhost:8082/API/v1.0/Matricula/estudiantes/{id}
+	@PutMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
      public ResponseEntity<Estudiante> actualizar(@RequestBody Estudiante est, @PathVariable Integer id) {
 		est.setId(id);
 		this.estudianteService.actualizar(est);
@@ -60,7 +64,7 @@ public class EstudianteController {
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	//En el postman ya no lleva el id
-	@PatchMapping(path = "/{id}")
+	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
 		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
@@ -84,7 +88,7 @@ public class EstudianteController {
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/borrar/2 puedo enviar cualquier tipo de dato
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) { //el tipo de dato que voy a ocupar en este caso es un id por 
 	                                 //por eso es un Integer y le pongo la anotacion @PathVariable
 		
@@ -98,7 +102,7 @@ public class EstudianteController {
 	}
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/buscar/1/nuevo/prueba
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}",produces="application/xml")
 	public  ResponseEntity<Estudiante>  buscarPorId(@PathVariable Integer id) {	
 	//Estudiante es= this.estudianteService.buscar(id);
 	//return ResponseEntity.status(236).body(es);
@@ -136,4 +140,11 @@ public class EstudianteController {
 	}
 	
 	//EL END POINT NO TIENE QUE SE AMBIGUO, EN DARSE ESTE CASO ME DA ERRORES AMBIGUOS MAPPING
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/texto/plano
+	@GetMapping(path = "/texto/plano")
+	public String prueba() {
+		String prueba = "Texto de prueba";
+		return prueba;
+		
+	}
 }
