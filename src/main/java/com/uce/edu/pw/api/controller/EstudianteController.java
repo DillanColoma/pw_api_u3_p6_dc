@@ -64,7 +64,7 @@ public class EstudianteController {
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	//En el postman ya no lleva el id
-	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
 		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());

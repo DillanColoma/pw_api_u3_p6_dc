@@ -2,6 +2,7 @@ package com.uce.edu.pw.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class MateriaController {
 	private IMateriaService iMateriaService;
 	
 	//Nivel 1 http://localhost:8082/API/v1.0/Matricula/materias
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Materia> agregar(@RequestBody Materia materia) {
 		this.iMateriaService.agregar(materia);
 		
@@ -35,7 +36,7 @@ public class MateriaController {
 		
 	}
 	//Nivel 1 http://localhost:8082/API/v1.0/Matricula/materias/{id}
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Materia> modificar(@RequestBody Materia materia,@PathVariable Integer id) {
 		 Materia mater = iMateriaService.buscar(id);
 	        if (mater != null) {
@@ -51,7 +52,7 @@ public class MateriaController {
 	      
 	}
 	//Nivel 1 http://localhost:8082/API/v1.0/Matricula/materias/{id}
-	@PatchMapping(path = "/{id}")
+	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Materia> modificarParcial(@RequestBody Materia materia,@PathVariable Integer id) {
 		materia.setId(id);
 		Materia materia2=this.iMateriaService.buscar(materia.getId());
@@ -73,7 +74,7 @@ public class MateriaController {
 		return new ResponseEntity<>(materia2,cabeceraPatch,239);
 	}
 	//Nivel 1 http://localhost:8082/API/v1.0/Matricula/materias
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		this.iMateriaService.borrar(id);
 		HttpHeaders cabeceraDelete= new  HttpHeaders();
@@ -83,7 +84,7 @@ public class MateriaController {
 		
 	}
 	//Nivel 1 http://localhost:8082/API/v1.0/Matricula/materias/{id}
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Materia> encontrar(@PathVariable Integer id) {
 		
 		HttpHeaders cabeceras = new HttpHeaders();
