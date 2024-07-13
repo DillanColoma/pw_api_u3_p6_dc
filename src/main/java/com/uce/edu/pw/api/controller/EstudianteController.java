@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uce.edu.pw.api.repository.modelo.Estudiante;
 import com.uce.edu.pw.api.repository.service.IEstudianteService;
+import com.uce.edu.pw.api.repository.service.IMateriaService;
+import com.uce.edu.pw.api.repository.service.to.EstudianteTO;
+import com.uce.edu.pw.api.repository.service.to.MateriaTO;
 
 @RestController
 @RequestMapping(path = "/estudiantes")
@@ -30,6 +33,9 @@ public class EstudianteController {
 	//Interaccion directa con el service
 	@Autowired
 	private IEstudianteService estudianteService;
+	
+	@Autowired
+	private IMateriaService iMateriaService;
 	
 	//@RequestBoby: cuando se necesita enviar objetos entrada, se lo pone como argumaneto del metodo 
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/guardar
@@ -64,7 +70,7 @@ public class EstudianteController {
 	//http://localhost:8080/API/v1.0/Matricula/estudiantes/actualizarParcial
 	//Nivel 1 http://localhost:8080/API/v1.0/Matricula/estudiantes/{id}
 	//En el postman ya no lleva el id
-	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Estudiante> actualizarParcial(@RequestBody Estudiante est, @PathVariable Integer id){
 		est.setId(id);
 		Estudiante est2= this.estudianteService.buscar(est.getId());
@@ -140,11 +146,21 @@ public class EstudianteController {
 	}
 	
 	//EL END POINT NO TIENE QUE SE AMBIGUO, EN DARSE ESTE CASO ME DA ERRORES AMBIGUOS MAPPING
-	//http://localhost:8080/API/v1.0/Matricula/estudiantes/texto/plano
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/texto/plano
 	@GetMapping(path = "/texto/plano")
 	public String prueba() {
 		String prueba = "Texto de prueba";
 		return prueba;
+		
+	}
+	//**************************************************************************//
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/hateoas/3
+	@GetMapping(path = "/hateoas/{id}")
+	public EstudianteTO buscarHateoas(@PathVariable Integer id){
+		EstudianteTO estudiante = this.estudianteService.buscarPorId(id);
+		List<MateriaTO> lista= this.iMateriaService.buscarPorIdEstudiante(id);
+		estudiante.setMaterias(lista);
+		return estudiante;
 		
 	}
 }
