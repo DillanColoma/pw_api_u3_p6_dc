@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.Column;
 
-public class EstudianteTO implements Serializable{
+public class EstudianteTO extends RepresentationModel<EstudianteTO> implements  Serializable{
 	
 	private static final long serialVersionUID = 436975337931482752L;
 
@@ -26,7 +28,7 @@ public class EstudianteTO implements Serializable{
 			
 	private String genero;
 	
-	private List<MateriaTO> materias;
+	//private List<MateriaTO> materias;
 
 	
 	//SET y GET
@@ -75,13 +77,13 @@ public class EstudianteTO implements Serializable{
 		return serialVersionUID;
 	}
 
-	public List<MateriaTO> getMaterias() {
+	/*public List<MateriaTO> getMaterias() {
 		return materias;
 	}
 
 	public void setMaterias(List<MateriaTO> materias) {
 		this.materias = materias;
-	}
+	}*/
 	
 	
 
