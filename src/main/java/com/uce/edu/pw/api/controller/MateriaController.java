@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uce.edu.pw.api.repository.modelo.Materia;
-import com.uce.edu.pw.api.repository.service.IMateriaService;
+import com.uce.edu.pw.api.modelo.Materia;
+import com.uce.edu.pw.api.service.IMateriaService;
 
 @RestController
 @RequestMapping(path = "/materias")

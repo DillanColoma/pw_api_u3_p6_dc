@@ -1,9 +1,9 @@
-package com.uce.edu.pw.api.repository.service;
+package com.uce.edu.pw.api.service;
 
 import java.util.List;
 
-import com.uce.edu.pw.api.repository.modelo.Estudiante;
-import com.uce.edu.pw.api.repository.service.to.EstudianteTO;
+import com.uce.edu.pw.api.modelo.Estudiante;
+import com.uce.edu.pw.api.service.to.EstudianteTO;
 
 public interface IEstudianteService {
 	public Estudiante buscar(Integer id);
@@ -13,6 +13,7 @@ public interface IEstudianteService {
 	public void borrar(Integer id);
 	public void registrar(Estudiante estudiante);
 	List<Estudiante> seleccionarPorGenero(String genero);
+	List<EstudianteTO> buscarTodos();
 	
 
 

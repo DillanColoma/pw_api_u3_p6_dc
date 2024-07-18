@@ -1,4 +1,4 @@
-package com.uce.edu.pw.api.repository.service;
+package com.uce.edu.pw.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uce.edu.pw.api.modelo.Materia;
 import com.uce.edu.pw.api.repository.IMateriaRepository;
-import com.uce.edu.pw.api.repository.modelo.Materia;
-import com.uce.edu.pw.api.repository.service.to.MateriaTO;
+import com.uce.edu.pw.api.service.to.MateriaTO;
 
 @Service
 public class MateriaServiceImpl implements IMateriaService {

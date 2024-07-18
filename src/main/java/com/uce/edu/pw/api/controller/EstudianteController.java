@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus.Series;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import com.uce.edu.pw.api.repository.modelo.Estudiante;
-import com.uce.edu.pw.api.repository.service.IEstudianteService;
-import com.uce.edu.pw.api.repository.service.IMateriaService;
-import com.uce.edu.pw.api.repository.service.to.EstudianteTO;
-import com.uce.edu.pw.api.repository.service.to.MateriaTO;
+
+import com.uce.edu.pw.api.modelo.Estudiante;
+import com.uce.edu.pw.api.service.IEstudianteService;
+import com.uce.edu.pw.api.service.IMateriaService;
+import com.uce.edu.pw.api.service.to.EstudianteTO;
+import com.uce.edu.pw.api.service.to.MateriaTO;
 
 @RestController
 @RequestMapping(path = "/estudiantes")
@@ -184,5 +185,19 @@ public class EstudianteController {
 	@GetMapping(path = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<MateriaTO> buscarMateriaPorIdEstudiante(@PathVariable Integer id) {
 		return this.iMateriaService.buscarPorIdEstudiante(id);
+	}
+	
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes
+	@GetMapping
+	public List<EstudianteTO> buscarTodos() {
+	    List<EstudianteTO> listaEstudiantes = this.estudianteService.buscarTodos();
+	    for (EstudianteTO estudianteTO : listaEstudiantes) {
+	        // PARA CREAR EL HIPERVINCULO USAMOS LA CLASE LINK
+	        Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriaPorIdEstudiante(estudianteTO.getId()))
+	                .withRel("sus materias");
+	        
+	        estudianteTO.add(myLink); // Assuming EstudianteTO extends ResourceSupport or RepresentationModel
+	    }
+	    return listaEstudiantes;
 	}
 }

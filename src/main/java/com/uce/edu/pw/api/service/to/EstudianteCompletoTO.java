@@ -1,4 +1,4 @@
-package com.uce.edu.pw.api.repository.service.to;
+package com.uce.edu.pw.api.service.to;
 
 public class EstudianteCompletoTO {
 	

@@ -1,4 +1,4 @@
-package com.uce.edu.pw.api.repository.modelo;
+package com.uce.edu.pw.api.modelo;
 
 import java.time.LocalDateTime;
 import java.util.List;

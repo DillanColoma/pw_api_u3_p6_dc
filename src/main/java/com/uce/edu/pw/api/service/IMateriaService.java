@@ -1,9 +1,9 @@
-package com.uce.edu.pw.api.repository.service;
+package com.uce.edu.pw.api.service;
 
 import java.util.List;
 
-import com.uce.edu.pw.api.repository.modelo.Materia;
-import com.uce.edu.pw.api.repository.service.to.MateriaTO;
+import com.uce.edu.pw.api.modelo.Materia;
+import com.uce.edu.pw.api.service.to.MateriaTO;
 
 public interface IMateriaService {
 	

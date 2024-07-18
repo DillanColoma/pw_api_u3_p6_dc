@@ -2,8 +2,8 @@ package com.uce.edu.pw.api.repository;
 
 import java.util.List;
 
-import com.uce.edu.pw.api.repository.modelo.Estudiante;
-import com.uce.edu.pw.api.repository.modelo.Materia;
+import com.uce.edu.pw.api.modelo.Estudiante;
+import com.uce.edu.pw.api.modelo.Materia;
 
 public interface IMateriaRepository {
 	

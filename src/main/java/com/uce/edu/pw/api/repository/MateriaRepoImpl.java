@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.uce.edu.pw.api.repository.modelo.Estudiante;
-import com.uce.edu.pw.api.repository.modelo.Materia;
+import com.uce.edu.pw.api.modelo.Estudiante;
+import com.uce.edu.pw.api.modelo.Materia;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
