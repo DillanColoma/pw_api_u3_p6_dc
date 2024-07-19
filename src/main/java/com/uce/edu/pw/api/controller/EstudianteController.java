@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -207,10 +207,24 @@ public class EstudianteController {
 	public EstudianteTO buscarPorCedula( @PathVariable String cedula) {
 		return this.estudianteService.buscarPorCedula(cedula);
 	}
-	//DELETE POR CEDULA
-	@DeleteMapping(path = "/{cedula}/cedula")
-	public int borrar(@PathVariable String cedula) {
-		EstudianteTO estu= this.estudianteService.buscarPorCedula(cedula);
-		return this.estudianteService.borrarPorCedula(estu.getCedula());
+	@DeleteMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> borrarPorCedula(@PathVariable String cedula){
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
+		this.estudianteService.eliminarPorCedula(cedula);
+		return new ResponseEntity<>("Borrar",cabeceras,HttpStatus.OK );
+
 	}
+	@PutMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteTO> actualizarPorCedula(@RequestBody EstudianteTO estudianteTO, @PathVariable String cedula){
+		HttpHeaders cabeceras= new HttpHeaders();
+		cabeceras.add("mensaje_236", "actualizarPorCedula");
+		EstudianteTO estudianteTO2= this.estudianteService.buscarPorCedula(cedula);
+		estudianteTO.setId(estudianteTO2.getId());
+		
+		this.estudianteService.actualizarPorCedula(estudianteTO);
+		return new ResponseEntity<>(estudianteTO2,cabeceras,HttpStatus.OK );
+
+	}
+	
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import com.uce.edu.pw.api.modelo.Estudiante;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -70,20 +72,30 @@ public class EstudianteRespositoryImpl implements IEstudianteRepository {
 	}
 
 	@Override
-	public int eliminarPorCedula(String cedula) {
-		Query query= this.entityManager.createQuery("DELETE from Estudiante e WHERE e.cedula =: datoCedula");
-		query.setParameter("datoCedula", cedula);
-		return query.executeUpdate();
+	public void eliminarPorCedula(String cedula) {
+		// Encontrar el estudiante por cédula
+	    TypedQuery<Estudiante> estudianteQuery = entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.cedula = :cedula", Estudiante.class);
+	    estudianteQuery.setParameter("cedula", cedula);
+	    
+	    Estudiante estudiante;
+	    try {
+	        estudiante = estudianteQuery.getSingleResult();
+	    } catch (NoResultException e) {
+	        // Si no se encuentra ningún estudiante con la cédula proporcionada
+	        throw new EntityNotFoundException("No se encontró el estudiante con la cédula: " + cedula);
+	    }
+
+	    // Eliminar las materias relacionadas primero (asumiendo que la entidad Materia tiene un campo 'estudiante' que es una relación many-to-one)
+	    Query deleteMateriasQuery = entityManager.createQuery("DELETE FROM Materia m WHERE m.estudiante.id = :estudianteId");
+	    deleteMateriasQuery.setParameter("estudianteId", estudiante.getId());
+	    deleteMateriasQuery.executeUpdate();
+
+	    // Eliminar el estudiante
+	    entityManager.remove(estudiante);
+	
 	}
 
-	@Override
-	public int actualizarPorCedula(String cedula) {
-		// TODO Auto-generated method stub
-		Query query= this.entityManager.createQuery("UPDATE Estudiante e SET e.cedula =: datoCedula");
-		query.setParameter("datoCedula", cedula);
-		return query.executeUpdate();
-	}
-
+	
 
 
 }

@@ -87,24 +87,49 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		return this.convertirLista(estuLista);
 	}
 
-	//*************************************NUEVO**********************************
+	// *************************************NUEVO**********************************
 	@Override
 	public EstudianteTO buscarPorCedula(String cedula) {
 		// TODO Auto-generated method stub
-		Estudiante estuCedula= this.estudianteRepository.seleccionarPorCedula(cedula);
+		Estudiante estuCedula = this.estudianteRepository.seleccionarPorCedula(cedula);
 		return this.convertir(estuCedula);
 	}
 
 	@Override
-	public int borrarPorCedula(String cedula) {
+	public void actualizarPorCedula(EstudianteTO estudianteTO) {
 		// TODO Auto-generated method stub
-		return this.estudianteRepository.eliminarPorCedula(cedula);
+
+		Estudiante estudiante = this.convertirNormal(estudianteTO);
+		this.estudianteRepository.actualizar(estudiante);
+
+	}
+
+	private Estudiante convertirNormal(EstudianteTO estudianteTO) {
+
+		Estudiante e = new Estudiante();
+		e.setApellido(estudianteTO.getApellido());
+		e.setCedula(estudianteTO.getCedula());
+		e.setFechaNacimiento(e.getFechaNacimiento());
+		e.setGenero(estudianteTO.getGenero());
+		e.setId(estudianteTO.getId());
+		e.setNombre(estudianteTO.getNombre());
+
+		return e;
+
 	}
 
 	@Override
-	public int modificarPorCedula(String cedula) {
+	public void eliminarPorCedula(String cedula) {
 		// TODO Auto-generated method stub
-		return this.estudianteRepository.actualizarPorCedula(cedula);
+		try {
+
+			this.estudianteRepository.eliminarPorCedula(cedula);
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			System.err.println("Error en la eliminarcion" + e);
+		}
+
 	}
 
 }

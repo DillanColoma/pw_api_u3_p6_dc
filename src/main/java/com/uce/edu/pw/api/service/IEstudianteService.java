@@ -7,19 +7,24 @@ import com.uce.edu.pw.api.service.to.EstudianteTO;
 
 public interface IEstudianteService {
 	public Estudiante buscar(Integer id);
+
 	public EstudianteTO buscarPorId(Integer id);
-	
+
 	public void actualizar(Estudiante estudiante);
+
 	public void borrar(Integer id);
+
 	public void registrar(Estudiante estudiante);
+
 	List<Estudiante> seleccionarPorGenero(String genero);
+
 	List<EstudianteTO> buscarTodos();
-	
-	//NUEVA Funcionalidad
+
+	// NUEVA Funcionalidad
 	EstudianteTO buscarPorCedula(String cedula);
-	int borrarPorCedula(String cedula);
-	int modificarPorCedula(String cedula);
 
+	void actualizarPorCedula(EstudianteTO estudianteTO);
 
+	void eliminarPorCedula(String cedula);
 
 }

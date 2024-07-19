@@ -21,8 +21,8 @@ public interface IEstudianteRepository {
 
 	//NUEVA FUNCIONALIDAD
 	Estudiante seleccionarPorCedula(String cedula);
-	int eliminarPorCedula(String cedula);
+	void eliminarPorCedula(String cedula);
 	
-	int actualizarPorCedula(String cedula);
+	
 
 }
