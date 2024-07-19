@@ -56,6 +56,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		esTo.setApellido(estu.getApellido());
 		esTo.setGenero(estu.getGenero());
 		esTo.setFechaNacimiento(estu.getFechaNacimiento());
+		esTo.setCedula(estu.getCedula());
 
 		return esTo;
 
@@ -84,6 +85,26 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		// TODO Auto-generated method stub
 		List<Estudiante> estuLista = this.estudianteRepository.seleccionarTodos();
 		return this.convertirLista(estuLista);
+	}
+
+	//*************************************NUEVO**********************************
+	@Override
+	public EstudianteTO buscarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		Estudiante estuCedula= this.estudianteRepository.seleccionarPorCedula(cedula);
+		return this.convertir(estuCedula);
+	}
+
+	@Override
+	public int borrarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		return this.estudianteRepository.eliminarPorCedula(cedula);
+	}
+
+	@Override
+	public int modificarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		return this.estudianteRepository.actualizarPorCedula(cedula);
 	}
 
 }

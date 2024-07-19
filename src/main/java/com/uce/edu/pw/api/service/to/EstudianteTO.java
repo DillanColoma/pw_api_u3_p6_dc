@@ -28,6 +28,8 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements  
 			
 	private String genero;
 	
+	private String cedula;
+	
 	//private List<MateriaTO> materias;
 
 	
@@ -75,6 +77,14 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements  
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 	/*public List<MateriaTO> getMaterias() {

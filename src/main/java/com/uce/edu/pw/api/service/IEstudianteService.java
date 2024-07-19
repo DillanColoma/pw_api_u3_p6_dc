@@ -15,6 +15,11 @@ public interface IEstudianteService {
 	List<Estudiante> seleccionarPorGenero(String genero);
 	List<EstudianteTO> buscarTodos();
 	
+	//NUEVA Funcionalidad
+	EstudianteTO buscarPorCedula(String cedula);
+	int borrarPorCedula(String cedula);
+	int modificarPorCedula(String cedula);
+
 
 
 }

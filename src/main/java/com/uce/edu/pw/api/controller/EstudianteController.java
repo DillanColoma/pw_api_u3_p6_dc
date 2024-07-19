@@ -188,7 +188,7 @@ public class EstudianteController {
 	}
 	
 	//http://localhost:8082/API/v1.0/Matricula/estudiantes
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<EstudianteTO> buscarTodos() {
 	    List<EstudianteTO> listaEstudiantes = this.estudianteService.buscarTodos();
 	    for (EstudianteTO estudianteTO : listaEstudiantes) {
@@ -199,5 +199,18 @@ public class EstudianteController {
 	        estudianteTO.add(myLink); // Assuming EstudianteTO extends ResourceSupport or RepresentationModel
 	    }
 	    return listaEstudiantes;
+	}
+	
+	//ACTUALIZAR POR CEDULA
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/1751451767/cedula
+	@GetMapping(path = "/{cedula}/cedula")
+	public EstudianteTO buscarPorCedula( @PathVariable String cedula) {
+		return this.estudianteService.buscarPorCedula(cedula);
+	}
+	//DELETE POR CEDULA
+	@DeleteMapping(path = "/{cedula}/cedula")
+	public int borrar(@PathVariable String cedula) {
+		EstudianteTO estu= this.estudianteService.buscarPorCedula(cedula);
+		return this.estudianteService.borrarPorCedula(estu.getCedula());
 	}
 }

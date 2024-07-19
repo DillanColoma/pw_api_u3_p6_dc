@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional
-public class EstudianteRespositoryImpl implements IEstudianteRepository{
+public class EstudianteRespositoryImpl implements IEstudianteRepository {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -46,7 +46,8 @@ public class EstudianteRespositoryImpl implements IEstudianteRepository{
 	@Override
 	public List<Estudiante> seleccionarPorGenero(String genero) {
 		// TODO Auto-generated method stub
-		TypedQuery<Estudiante>myqueQuery= this.entityManager.createQuery("select e from Estudiante e where e.genero=:genero",Estudiante.class);
+		TypedQuery<Estudiante> myqueQuery = this.entityManager
+				.createQuery("select e from Estudiante e where e.genero=:genero", Estudiante.class);
 		myqueQuery.setParameter("genero", genero);
 		return myqueQuery.getResultList();
 	}
@@ -54,9 +55,35 @@ public class EstudianteRespositoryImpl implements IEstudianteRepository{
 	@Override
 	public List<Estudiante> seleccionarTodos() {
 		// TODO Auto-generated method stub
-		Query  myquerQuery= this.entityManager.createNativeQuery("SELECT * FROM Estudiante", Estudiante.class);
+		Query myquerQuery = this.entityManager.createNativeQuery("SELECT * FROM Estudiante", Estudiante.class);
 		return myquerQuery.getResultList();
 	}
-	
-	
+    //***************************************NUEVAS Funcionalidad********************************************************* /
+	@Override
+	public Estudiante seleccionarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		TypedQuery<Estudiante> query = this.entityManager
+				.createQuery("SELECT e FROM Estudiante e WHERE e.cedula=:cedula", Estudiante.class);
+		query.setParameter("cedula", cedula);
+		return query.getSingleResult();
+		
+	}
+
+	@Override
+	public int eliminarPorCedula(String cedula) {
+		Query query= this.entityManager.createQuery("DELETE from Estudiante e WHERE e.cedula =: datoCedula");
+		query.setParameter("datoCedula", cedula);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int actualizarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		Query query= this.entityManager.createQuery("UPDATE Estudiante e SET e.cedula =: datoCedula");
+		query.setParameter("datoCedula", cedula);
+		return query.executeUpdate();
+	}
+
+
+
 }
