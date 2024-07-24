@@ -9,7 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +30,7 @@ import com.uce.edu.pw.api.service.to.EstudianteTO;
 import com.uce.edu.pw.api.service.to.MateriaTO;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/estudiantes")
 public class EstudianteController {
 
@@ -207,7 +208,8 @@ public class EstudianteController {
 	public EstudianteTO buscarPorCedula( @PathVariable String cedula) {
 		return this.estudianteService.buscarPorCedula(cedula);
 	}
-	@DeleteMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE)
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/1751451767/cedula
+	@DeleteMapping(path = "/{cedula}/cedula", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrarPorCedula(@PathVariable String cedula){
 		HttpHeaders cabeceras= new HttpHeaders();
 		cabeceras.add("mensaje_236", "Corresponde a la consulta de un recurso");
@@ -215,6 +217,7 @@ public class EstudianteController {
 		return new ResponseEntity<>("Borrar",cabeceras,HttpStatus.OK );
 
 	}
+	//http://localhost:8082/API/v1.0/Matricula/estudiantes/1751451767/cedula
 	@PutMapping(path = "/{cedula}/buscarPorCedula", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EstudianteTO> actualizarPorCedula(@RequestBody EstudianteTO estudianteTO, @PathVariable String cedula){
 		HttpHeaders cabeceras= new HttpHeaders();
@@ -225,6 +228,21 @@ public class EstudianteController {
 		this.estudianteService.actualizarPorCedula(estudianteTO);
 		return new ResponseEntity<>(estudianteTO2,cabeceras,HttpStatus.OK );
 
+	}
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/hateoas
+	@PostMapping(path = "/hateoas", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<EstudianteTO> guardar(@RequestBody EstudianteTO est ) {
+
+		HttpHeaders cabeceraPost = new HttpHeaders();
+		cabeceraPost.add("mensaje_201", "Corresponde a la inserción de un recurso");
+		cabeceraPost.add("valor", "Estudiante insertado con éxito");
+		this.estudianteService.agregar(est);
+		
+		EstudianteTO m= this.estudianteService.buscarPorCedula(est.getCedula());
+		
+		//System.out.println("estu: "+ m.getCedula().toString());
+		//System.out.println("estu completo: "+m.toString());
+		return new ResponseEntity<>(m, cabeceraPost, 201);
 	}
 	
 }

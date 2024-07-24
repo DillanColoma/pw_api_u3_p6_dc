@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="materia")
-@JsonIgnoreProperties(value = "estudiante")
+//@JsonIgnoreProperties(value = "estudiante")
 public class Materia {
 	
 	@Id

@@ -26,5 +26,6 @@ public interface IEstudianteService {
 	void actualizarPorCedula(EstudianteTO estudianteTO);
 
 	void eliminarPorCedula(String cedula);
+	void agregar(EstudianteTO estudianteTO);
 
 }

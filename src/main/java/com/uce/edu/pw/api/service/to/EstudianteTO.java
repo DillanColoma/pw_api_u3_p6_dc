@@ -7,7 +7,11 @@ import java.util.List;
 import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.Column;
+import lombok.Data;
+import lombok.ToString;
 
+@Data
+@ToString
 public class EstudianteTO extends RepresentationModel<EstudianteTO> implements  Serializable{
 	
 	private static final long serialVersionUID = 436975337931482752L;
@@ -87,6 +91,12 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements  
 		this.cedula = cedula;
 	}
 
+	@Override
+	public String toString() {
+		return "EstudianteTO [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
+				+ fechaNacimiento + ", genero=" + genero + ", cedula=" + cedula + "]";
+	}
+
 	/*public List<MateriaTO> getMaterias() {
 		return materias;
 	}
@@ -94,6 +104,8 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements  
 	public void setMaterias(List<MateriaTO> materias) {
 		this.materias = materias;
 	}*/
+	
+	
 	
 	
 

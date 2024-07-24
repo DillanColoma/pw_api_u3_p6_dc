@@ -109,7 +109,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		Estudiante e = new Estudiante();
 		e.setApellido(estudianteTO.getApellido());
 		e.setCedula(estudianteTO.getCedula());
-		e.setFechaNacimiento(e.getFechaNacimiento());
+		e.setFechaNacimiento(estudianteTO.getFechaNacimiento());
 		e.setGenero(estudianteTO.getGenero());
 		e.setId(estudianteTO.getId());
 		e.setNombre(estudianteTO.getNombre());
@@ -130,6 +130,13 @@ public class EstudianteServiceImpl implements IEstudianteService {
 			System.err.println("Error en la eliminarcion" + e);
 		}
 
+	}
+
+	@Override
+	public void agregar(EstudianteTO estudianteTO) {
+		// TODO Auto-generated method stub
+		this.estudianteRepository.insertar(this.convertirNormal(estudianteTO));
+		
 	}
 
 }
